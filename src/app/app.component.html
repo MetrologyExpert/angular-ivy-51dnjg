@@ -1,0 +1,78 @@
+<p></p>
+<p></p>
+<form [formGroup]="uncertaintyBudgetForm"  #f="ngForm" (ngSubmit) = "onSubmit()" >
+
+    <div class="row">
+        <div class="col-xs-12">
+            <button type="submit" 
+            class="btn btn-success"
+            [disabled]="!uncertaintyBudgetForm.valid">
+                Save
+            </button>
+            <button type="button" class="btn btn-danger" (click)="onCancel()">
+                Cancel
+            </button>
+        </div>
+    </div>
+    <p></p>
+    <br>
+    <br>
+     <h4>Uncertainty Budget</h4>
+     <p></p>
+     <label for="measurementCase"><h6>Measurement Case</h6></label>
+     <p></p>
+     <textarea class="form-control" id="measurementCase" formControlName="measurementCase" rows="3"></textarea>
+     <p></p>
+     
+    <button class="btn btn-primary" (click)="addContribution()">Add Contribution</button>
+
+    <ng-container formArrayName="contributions">
+       
+      <div class="align-right" width="100">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Row</th>
+                <th scope="col">Title</th>
+                <th scope="col">Value</th>
+                <th scope="col">Divisor</th>
+                <th scope="col">Uncertainty</th>
+                <th scope="col">Sensitivity Coefficient</th>
+                <th scope="col">Standard Uncertainty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let con of contributionsControls.controls; index as i"
+              [formGroupName]="i"
+              >
+                <td scope="row">{{i}}</td>
+                <td><input class="form-control" id="title" formControlName="title" />
+               </td>
+                <td><input class="form-control" formControlName="errorValue" /></td>
+                <td><input class="form-control" formControlName="divisor" /></td> 
+                <td><input class="form-control" formControlName="standardUncertainty" /></td>
+                <td><input class="form-control" formControlName="sensitivityCoefficient" /></td>
+                <td><input class="form-control" formControlName="stdUncertainty"  /></td>
+             </tr>
+            </tbody>
+        </table>        
+      </div>
+    </ng-container>
+
+    <table class="table table-striped">
+        <thead>
+            <tr class="align-right">
+                <th class="col">Total standard uncertainty</th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr>
+                  <td><input class="form-control" formControlName="totalUncertainty" /></td>
+             </tr>
+        </tbody> 
+    </table>
+
+    Form Status: {{ uncertaintyBudgetForm.status }}
+    <p></p>
+    {{ this.uncertaintyBudgetForm.value | json }}
+  </form>
